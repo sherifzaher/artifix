@@ -5,7 +5,7 @@ import {useRouter} from "next/navigation";
 import axios from 'axios'
 import * as z from 'zod';
 import {useForm} from "react-hook-form";
-import {Music} from "lucide-react";
+import {VideoIcon} from "lucide-react";
 import {zodResolver} from "@hookform/resolvers/zod";
 
 import Heading from "@/components/heading";
@@ -17,9 +17,9 @@ import { formSchema } from './constants'
 import Empty from "@/components/empty";
 import Loader from "@/components/loader";
 
-export default function MusicPage(){
+export default function VideoPage(){
   const router = useRouter();
-  const [music,setMusic] = useState("");
+  const [video,setVideo] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -32,10 +32,10 @@ export default function MusicPage(){
 
   const onSubmitForm = async (values: z.infer<typeof formSchema>) => {
     try {
-      setMusic("");
-      const response  = await axios.post('/api/music', values);
+      setVideo("");
+      const response  = await axios.post('/api/video', values);
 
-      setMusic(response.data.audio);
+      setVideo(response.data[0]);
       form.reset();
     } catch (err){
       // TODO: Open Pro Modal
@@ -49,11 +49,11 @@ export default function MusicPage(){
   return (
       <div>
         <Heading
-          title="Music Generation"
-          description="Turn your prompt into music."
-          icon={Music}
-          iconColor="text-emerald-500"
-          bgColor="bg-emerald-500/10"
+          title="Video Generation"
+          description="Turn your prompt into video."
+          icon={VideoIcon}
+          iconColor="text-orange-700"
+          bgColor="bg-emerald-700/10"
         />
         <div className="px-4 lg:px-8">
           <div>
@@ -67,7 +67,7 @@ export default function MusicPage(){
                         <Input
                           className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                           disabled={isLoading}
-                          placeholder="Piano solo"
+                          placeholder="Clown fish swimming around the coral reef"
                           {...field}
                         />
                       </FormControl>
@@ -84,13 +84,13 @@ export default function MusicPage(){
                 <Loader />
               </div>
             )}
-            {!music && !isLoading && (
-              <Empty label="No music generated." />
+            {!video && !isLoading && (
+              <Empty label="No video generated." />
             )}
-            {music && (
-              <audio controls className="w-full mt-8">
-                <source src={music} />
-              </audio>
+            {video && (
+              <video controls className="w-full aspect-video mt-8 rounded-lg border bg-black">
+                <source src={video} />
+              </video>
             )}
           </div>
         </div>
