@@ -8,6 +8,7 @@ import {Progress} from "@/components/ui/progress";
 import {Button} from "@/components/ui/button";
 
 import {MAX_FREE_COUNTS} from "@/constants";
+import {useProModal} from "@/hooks/use-pro-modal";
 
 type Props = {
   apiLimitCount: number;
@@ -15,6 +16,8 @@ type Props = {
 
 export default function FreeCounter({ apiLimitCount }:Props){
   const [mounted,setMounted] = useState(false);
+
+  const proModal = useProModal();
 
   useEffect(() => {
     setMounted(true);
@@ -33,7 +36,7 @@ export default function FreeCounter({ apiLimitCount }:Props){
                 value={(apiLimitCount / MAX_FREE_COUNTS) * 100}
               />
             </div>
-            <Button variant="premium" className="w-full">
+            <Button onClick={proModal.onOpen} variant="premium" className="w-full">
               Upgrade
               <Zap className="w-4 h-4 ml-2 fill-white" />
             </Button>
