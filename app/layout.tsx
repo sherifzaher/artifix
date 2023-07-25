@@ -6,11 +6,6 @@ import ModalProvider from "@/components/modal-provider";
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: 'Artifix',
-  description: 'AI Platform',
-}
-
 export default function RootLayout({
   children,
 }: {

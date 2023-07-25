@@ -11,6 +11,8 @@ declare global {
        REPLICATE_API_TOKEN: string;
        DATABASE_URL: string;
        STRIPE_API_KEY: string;
+       STRIPE_WEBHOOK_SECRET: strin;
+       NEXT_PUBLIC_APP_URL: string;
      }
       interface ProcessEnv extends Envs {}
   }
