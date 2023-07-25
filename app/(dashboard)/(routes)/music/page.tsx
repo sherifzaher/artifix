@@ -3,6 +3,7 @@
 import { useState } from "react";
 import {useRouter} from "next/navigation";
 import axios from 'axios'
+import toast from "react-hot-toast";
 import * as z from 'zod';
 import {useForm} from "react-hook-form";
 import {Music} from "lucide-react";
@@ -13,10 +14,12 @@ import {Form, FormControl, FormField, FormItem} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 
-import { formSchema } from './constants'
+import {useProModal} from "@/hooks/use-pro-modal";
+
 import Empty from "@/components/empty";
 import Loader from "@/components/loader";
-import {useProModal} from "@/hooks/use-pro-modal";
+
+import { formSchema } from './constants'
 
 export default function MusicPage(){
   const router = useRouter();
@@ -43,6 +46,8 @@ export default function MusicPage(){
     } catch (err: any){
       if (err?.response?.status === 403){
         proModal.onOpen();
+      } else {
+        toast.error("Something went wrong");
       }
       console.log(err);
     } finally {

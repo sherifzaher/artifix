@@ -3,6 +3,7 @@
 import { useState } from "react";
 import {useRouter} from "next/navigation";
 import axios from 'axios'
+import toast from "react-hot-toast";
 import * as z from 'zod';
 import {useForm} from "react-hook-form";
 import {VideoIcon} from "lucide-react";
@@ -43,6 +44,8 @@ export default function VideoPage(){
     } catch (err: any){
       if (err?.response?.status === 403){
         proModal.onOpen();
+      } else {
+        toast.error("Something went wrong");
       }
       console.log(err);
     } finally {

@@ -6,6 +6,7 @@ import {useRouter} from "next/navigation";
 import axios from 'axios'
 import * as z from 'zod';
 import {useForm} from "react-hook-form";
+import toast from "react-hot-toast";
 import {Download, ImageIcon} from "lucide-react";
 import {zodResolver} from "@hookform/resolvers/zod";
 
@@ -53,6 +54,8 @@ export default function ConversationPage(){
     } catch (err: any){
       if (err?.response?.status === 403){
         proModal.onOpen();
+      } else {
+        toast.error("Something went wrong");
       }
       console.log(err);
     } finally {

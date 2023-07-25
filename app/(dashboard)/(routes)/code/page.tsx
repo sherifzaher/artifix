@@ -6,6 +6,7 @@ import {useRouter} from "next/navigation";
 import axios from 'axios'
 import * as z from 'zod';
 import {useForm} from "react-hook-form";
+import toast from "react-hot-toast";
 import {Code} from "lucide-react";
 import {zodResolver} from "@hookform/resolvers/zod";
 import ReactMarkdown from "react-markdown";
@@ -15,13 +16,16 @@ import {Form, FormControl, FormField, FormItem} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 
-import { formSchema } from './constants'
+import {useProModal} from "@/hooks/use-pro-modal";
+
 import Empty from "@/components/empty";
 import Loader from "@/components/loader";
-import {cn} from "@/lib/utils";
 import UserAvatar from "@/components/user-avatar";
 import BotAvatar from "@/components/bot-avatar";
-import {useProModal} from "@/hooks/use-pro-modal";
+
+import {cn} from "@/lib/utils";
+
+import { formSchema } from './constants'
 
 export default function CodePage(){
   const router = useRouter();
@@ -54,6 +58,8 @@ export default function CodePage(){
     } catch (err: any){
       if (err?.response?.status === 403){
         proModal.onOpen();
+      } else {
+        toast.error("Something went wrong");
       }
     } finally {
       router.refresh();

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import {ChatCompletionRequestMessage} from "openai";
+import toast from "react-hot-toast";
 import {useRouter} from "next/navigation";
 import axios from 'axios'
 import * as z from 'zod';
@@ -20,9 +21,10 @@ import UserAvatar from "@/components/user-avatar";
 import BotAvatar from "@/components/bot-avatar";
 import {cn} from "@/lib/utils";
 
+import {useProModal} from "@/hooks/use-pro-modal";
+
 import { formSchema } from './constants'
 
-import {useProModal} from "@/hooks/use-pro-modal";
 
 export default function ConversationPage(){
   const router = useRouter();
@@ -41,6 +43,7 @@ export default function ConversationPage(){
 
   const onSubmitForm = async (values: z.infer<typeof formSchema>) => {
     try {
+      throw new Error("Something")
       const userMessage: ChatCompletionRequestMessage = {
         role: 'user',
         content: values.prompt
@@ -55,6 +58,8 @@ export default function ConversationPage(){
     } catch (err: any){
       if (err?.response?.status === 403){
         proModal.onOpen();
+      } else {
+        toast.error("Something went wrong");
       }
       console.log(err);
     } finally {
